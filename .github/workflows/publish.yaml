@@ -1,0 +1,24 @@
+on:
+  release:
+    types:
+      - published
+
+env:
+  CARGO_TERM_COLOR: always
+
+name: Publish
+
+jobs:
+  publish:
+    name: Publihs to crates.io
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: katyo/publish-crates@v1
+        with:
+          registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
