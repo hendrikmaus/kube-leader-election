@@ -29,14 +29,14 @@ async fn main() -> anyhow::Result<()> {
                 .take(7)
                 .map(char::from)
                 .collect();
-            let holder_id = format!("simple-lease-{}", random.to_lowercase());
+            let holder_id = format!("shared-lease-{}", random.to_lowercase());
 
             let leadership = LeaseLock::new(
                 client,
                 "default",
                 LeaseLockParams {
                     holder_id,
-                    lease_name: "simple-lease-example".into(),
+                    lease_name: "shared-lease-example".into(),
                     lease_ttl: Duration::from_secs(15),
                 },
             );
