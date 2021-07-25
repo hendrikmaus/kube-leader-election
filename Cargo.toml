@@ -1,0 +1,28 @@
+[package]
+name = "kube-leader-election"
+version = "0.1.0"
+edition = "2018"
+authors = ["Hendrik Maus <aidentailor@gmail.com>"]
+description = "Leader election implementations for Kubernetes workloads"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = "0.4"
+kube = "0.58"
+kube-runtime = "0.58"
+k8s-openapi = { version = "0.12", default-features = false }
+serde = "1"
+serde_json = "1"
+thiserror = "1"
+log = "0.4"
+
+[dev-dependencies]
+anyhow = "1"
+async-std = { version = "1", features = ["attributes", "tokio1", "tokio02"] }
+kube = "0.58"
+kube-runtime = "0.58"
+k8s-openapi = { version = "0.12", default-features = false, features = ["v1_20"] }
+env_logger = "0.9"
+rand = "0.8"
+cmd_lib = "1"
