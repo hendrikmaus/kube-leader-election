@@ -1,0 +1,28 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request: {}
+
+env:
+  CARGO_TERM_COLOR: always
+
+name: Continuous integration
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: nolar/setup-k3d-k3s@v1
+        with:
+          k3d-name: kle
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
