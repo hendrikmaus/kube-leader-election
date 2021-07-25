@@ -226,7 +226,8 @@ impl LeaseLock {
                 "acquireTime": now,
                 "renewTime": now,
                 "leaseTransitions": transitions + 1,
-                "holderIdentity": &self.params.holder_id
+                "holderIdentity": &self.params.holder_id,
+                "leaseDurationSeconds": self.params.lease_ttl.as_secs(),
             }
         });
         let patch = kube::api::Patch::Merge(&patch);
@@ -248,7 +249,8 @@ impl LeaseLock {
             "kind": "Lease",
             "metadata": { "name": &self.params.lease_name },
             "spec": {
-                "renewTime": chrono::Utc::now().to_rfc3339_opts(SecondsFormat::Micros, false)
+                "renewTime": chrono::Utc::now().to_rfc3339_opts(SecondsFormat::Micros, false),
+                "leaseDurationSeconds": self.params.lease_ttl.as_secs(),
             }
         });
         let patch = kube::api::Patch::Merge(&patch);
