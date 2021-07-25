@@ -94,35 +94,33 @@ impl LeaseLock {
                         acquired_lease: true,
                         lease: Some(lease),
                     })
+                } else if self.has_lease_expired(&l)? {
+                    let lease = self.acquire_lease(&l).await?;
+                    log::info!("successfully acquired lease {}", lease.name());
+
+                    Ok(LeaseLockResult {
+                        acquired_lease: true,
+                        lease: Some(lease),
+                    })
                 } else {
-                    if self.has_lease_expired(&l)? {
-                        let lease = self.acquire_lease(&l).await?;
-                        log::info!("successfully acquired lease {}", lease.name());
+                    log::info!(
+                        "lease is held by {} and has not yet expired",
+                        l.spec
+                            .as_ref()
+                            .ok_or(Error::TraverseLease {
+                                key: "spec".to_string()
+                            })?
+                            .holder_identity
+                            .as_ref()
+                            .ok_or(Error::TraverseLease {
+                                key: "spec.holderIdentity".to_string()
+                            })?
+                    );
 
-                        Ok(LeaseLockResult {
-                            acquired_lease: true,
-                            lease: Some(lease),
-                        })
-                    } else {
-                        log::info!(
-                            "lease is held by {} and has not yet expired",
-                            l.spec
-                                .as_ref()
-                                .ok_or(Error::TraverseLease {
-                                    key: "spec".to_string()
-                                })?
-                                .holder_identity
-                                .as_ref()
-                                .ok_or(Error::TraverseLease {
-                                    key: "spec.holderIdentity".to_string()
-                                })?
-                        );
-
-                        Ok(LeaseLockResult {
-                            acquired_lease: false,
-                            lease: None,
-                        })
-                    }
+                    Ok(LeaseLockResult {
+                        acquired_lease: false,
+                        lease: None,
+                    })
                 }
             }
             Err(kube::Error::Api(api_err)) => {
