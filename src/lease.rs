@@ -281,7 +281,7 @@ impl LeaseLock {
                 .ok_or(Error::TraverseLease {
                     key: "spec.holderIdentity".to_string(),
                 })?;
-            return Err(Error::ReleaseLockWhenNotLeading { leader })?;
+            return Err(Error::ReleaseLockWhenNotLeading { leader });
         }
 
         let now: &str = &chrono::Utc::now().to_rfc3339_opts(SecondsFormat::Micros, false);
