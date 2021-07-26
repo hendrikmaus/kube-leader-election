@@ -1,5 +1,8 @@
 # Kubernetes Leader Election in Rust
 
+![CI workflow](https://github.com/hendrikmaus/kube-leader-election/actions/workflows/ci.yaml/badge.svg)
+![crates.io version](https://img.shields.io/crates/v/kube-leader-election)
+
 A crate to allow for creating leader election concepts for workloads running in Kubernetes clusters using Rust.
 
 ```rust
