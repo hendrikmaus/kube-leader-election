@@ -21,7 +21,7 @@ let lease = leadership.try_acquire_or_renew().await?;
 log::info!("currently leading: {}", lease.acquired_lease);
 ```
 
-*Please refer to the [`examples`](./examples) for runnable usage demonstrations.*
+*Please refer to the [`examples`](https://github.com/hendrikmaus/kube-leader-election/tree/master/examples) for runnable usage demonstrations.*
 
 ## Target Audience
 
