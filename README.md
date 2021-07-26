@@ -2,6 +2,7 @@
 
 ![CI workflow](https://github.com/hendrikmaus/kube-leader-election/actions/workflows/ci.yaml/badge.svg)
 ![crates.io version](https://img.shields.io/crates/v/kube-leader-election)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A crate to allow for creating leader election concepts for workloads running in Kubernetes clusters using Rust.
 
