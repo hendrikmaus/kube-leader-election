@@ -11,7 +11,7 @@ This library provides simple leader election for Kubernetes workloads.
 kube-leader-election = "0.2"
 ```
 
-> *Make sure to use the [latest version](https://crates.io/crates/kube-leader-election/versions) of the crate.
+> *Make sure to use the [latest version](https://crates.io/crates/kube-leader-election/versions) of the crate.*
 
 ## Example
 
