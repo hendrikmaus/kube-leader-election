@@ -1,6 +1,6 @@
 [package]
 name = "kube-leader-election"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2018"
 authors = ["Hendrik Maus <aidentailor@gmail.com>"]
 description = "Leader election implementations for Kubernetes workloads"
@@ -10,7 +10,7 @@ license = "MIT"
 
 [dependencies]
 chrono = "0.4"
-kube = { version = "0.63", default-features = false, features = ["client"] }
+kube = { version = "0.64", default-features = false, features = ["client"] }
 k8s-openapi = { version = "0.13", default-features = false }
 serde = "1"
 serde_json = "1"
@@ -20,7 +20,7 @@ log = "0.4"
 [dev-dependencies]
 anyhow = "1"
 async-std = { version = "1", features = ["attributes", "tokio1", "tokio02"] }
-kube = "0.63"
+kube = "0.64"
 k8s-openapi = { version = "0.13", default-features = false, features = ["v1_20"] }
 env_logger = "0.9"
 rand = "0.8"
