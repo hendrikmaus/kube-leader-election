@@ -7,6 +7,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  CARGO_HOME: usr/share/rust/.cargo
   CACHE_REGISTRY: ghcr.io
   CACHE_IMAGE: ${{ github.repository }}
   CACHE_TAG: release-cache
