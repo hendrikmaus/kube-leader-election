@@ -7,7 +7,6 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  CARGO_HOME: usr/share/rust/.cargo
   CACHE_REGISTRY: ghcr.io
   CACHE_IMAGE: ${{ github.repository }}
   CACHE_TAG: release-cache
@@ -52,7 +51,7 @@ jobs:
       - name: Save cache
         uses: hendrikmaus/custom-cache-action/save@master
         with:
-          paths: "${{ github.workspace }}/target /usr/share/rust/.cargo/registry/index /usr/share/rust/.cargo/registry/cache"
+          paths: "${{ github.workspace }}/target /home/runner/.cargo/registry/index /home/runner/.cargo/registry/cache"
           registry: ${{ env.CACHE_REGISTRY }}
           image: ${{ env.CACHE_IMAGE }}
           tag: ${{ env.CACHE_TAG }}
