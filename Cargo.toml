@@ -1,6 +1,6 @@
 [package]
 name = "kube-leader-election"
-version = "0.5.3"
+version = "0.6.0"
 edition = "2018"
 authors = ["Hendrik Maus <aidentailor@gmail.com>"]
 description = "Leader election implementations for Kubernetes workloads"
