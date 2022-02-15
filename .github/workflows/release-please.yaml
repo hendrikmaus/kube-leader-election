@@ -8,7 +8,7 @@ on:
 
 jobs:
   release-please:
-    name: Release
+    name: Release Please # https://github.com/googleapis/release-please
     runs-on: ubuntu-latest
     steps:
       - name: Release Please
@@ -33,6 +33,10 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
+
+      - name: Cache
+        if: ${{ steps.release.outputs.release_created }}
+        uses: Swatinem/rust-cache@v1
 
       - name: Publish to crates.io
         if: ${{ steps.release.outputs.release_created }}
