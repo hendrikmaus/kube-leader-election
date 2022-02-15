@@ -8,7 +8,7 @@ This library provides simple leader election for Kubernetes workloads.
 
 ```toml
 [dependencies]
-kube-leader-election = "0.8"
+kube-leader-election = "0.10.0"
 ```
 
 > *Make sure to use the [latest version](https://crates.io/crates/kube-leader-election/versions) of the crate.*
