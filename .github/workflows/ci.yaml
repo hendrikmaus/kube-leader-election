@@ -1,3 +1,6 @@
+---
+name: CI
+
 on:
   push:
     branches:
@@ -7,11 +10,9 @@ on:
 env:
   CARGO_TERM_COLOR: always
 
-name: Continuous integration
-
 jobs:
   test:
-    name: Tests
+    name: Test
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -27,7 +28,9 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: test
+
   clippy_check:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
