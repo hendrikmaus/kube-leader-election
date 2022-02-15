@@ -8,7 +8,7 @@ on:
 
 jobs:
   release-please:
-    name: Release
+    name: Release Please # https://github.com/googleapis/release-please
     runs-on: ubuntu-latest
     steps:
       - name: Release Please
