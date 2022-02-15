@@ -13,8 +13,6 @@ kube-leader-election = "0.10.2"
 ```
 <!-- x-release-please-end -->
 
-> *Make sure to use the [latest version](https://crates.io/crates/kube-leader-election/versions) of the crate.*
-
 ## Example
 
 Acquire leadership on a Kubernetes [`Lease`](https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/lease-v1/) called `some-operator-lock`, in the `default` namespace and promise to renew the lock every 15 seconds:
