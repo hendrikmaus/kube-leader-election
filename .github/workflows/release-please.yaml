@@ -1,10 +1,14 @@
+---
+name: CD
+
 on:
   push:
     branches:
       - master
-name: release-please
+
 jobs:
   release-please:
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Release Please
