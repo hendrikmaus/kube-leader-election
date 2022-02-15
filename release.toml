@@ -1,9 +1,0 @@
-pre-release-replacements = [
-    {file="README.md", search="kube-leader-election = .*", replace="{{crate_name}} = \"{{version}}\""}
-]
-allow-branch = ["*"]
-sign-commit = true
-sign-tag = true
-pre-release-commit-message = "chore: Release"
-tag-message = "{{tag_name}}"
-tag-name = "{{version}}"
