@@ -7,4 +7,3 @@ sign-tag = true
 pre-release-commit-message = "chore: Release"
 tag-message = "{{tag_name}}"
 tag-name = "{{version}}"
-post-release-hook = ["./.github/create-release.sh"]
