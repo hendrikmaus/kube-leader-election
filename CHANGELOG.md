@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.10.2](https://github.com/hendrikmaus/kube-leader-election/compare/v0.10.1...v0.10.2) (2022-02-15)
+
+
+### Bug Fixes
+
+* use caching in the release workflow ([#28](https://github.com/hendrikmaus/kube-leader-election/issues/28)) ([065e97f](https://github.com/hendrikmaus/kube-leader-election/commit/065e97f835ba7d8fa51ed5e5a014f8fd3c483c91))
+
 ### 0.10.1 (2022-02-15)
 
 
