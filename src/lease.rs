@@ -88,7 +88,7 @@ impl LeaseLock {
             Ok(l) => {
                 if self.are_we_leading(&l)? {
                     let lease = self.renew_lease().await?;
-                    log::info!("successfully renewed lease {}", l.name());
+                    log::debug!("successfully renewed lease {}", l.name());
 
                     Ok(LeaseLockResult {
                         acquired_lease: true,
