@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.12.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.11.0...v0.12.0) (2022-05-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update kube requirement from 0.71 to 0.72 (#35)
+
+### Features
+
+* Update kube requirement from 0.71 to 0.72 ([#35](https://github.com/hendrikmaus/kube-leader-election/issues/35)) ([f190dc4](https://github.com/hendrikmaus/kube-leader-election/commit/f190dc4ae42f0ad43f19b8a47a4de37e7471d5bd))
+
+
+### Bug Fixes
+
+* Reduce severity of 'successfully renewed lease' logging to DEBUG ([#36](https://github.com/hendrikmaus/kube-leader-election/issues/36)) ([43f970d](https://github.com/hendrikmaus/kube-leader-election/commit/43f970d577f9e7e55abd5c3107e97740bd3d1309))
+
 ## [0.11.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.10.2...v0.11.0) (2022-04-14)
 
 ### Miscellaneous Chores
