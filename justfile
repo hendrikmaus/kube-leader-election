@@ -9,7 +9,7 @@ start-test-cluster:
   #!/usr/bin/env bash
   set -euo pipefail
   if ! k3d cluster list | grep -qF "{{cluster}}"; then
-    k3d cluster create "{{cluster}}" --k3s-server-arg="--no-deploy=traefik"
+    k3d cluster create "{{cluster}}" --k3s-arg="--disable=traefik@server:0"
   else
     echo "Cluster already running"
   fi
