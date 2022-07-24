@@ -10,7 +10,7 @@ license = "MIT"
 
 [dependencies]
 chrono = "0.4"
-kube = { version = "0.73", default-features = false, features = ["client"] }
+kube = { version = "0.74", default-features = false, features = ["client"] }
 k8s-openapi = { version = "0.15.0", default-features = false }
 serde = "1"
 serde_json = "1"
@@ -20,7 +20,7 @@ log = "0.4"
 [dev-dependencies]
 anyhow = "1"
 async-std = { version = "1", features = ["attributes", "tokio1", "tokio02"] }
-kube = "0.73"
+kube = "0.74"
 k8s-openapi = { version = "0.15.0", default-features = false, features = ["v1_24"] }
 env_logger = "0.9"
 rand = "0.8"
