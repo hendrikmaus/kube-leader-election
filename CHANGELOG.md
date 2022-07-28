@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.13.0...v0.14.0) (2022-07-28)
+
+
+### Miscellaneous Chores
+
+* release 0.14.0 ([61d5cd9](https://github.com/hendrikmaus/kube-leader-election/commit/61d5cd9884c75836d276a09250b9649017dea06a))
+
 ## [0.13.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.12.0...v0.13.0) (2022-05-26)
 
 
