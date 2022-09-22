@@ -88,7 +88,7 @@ impl LeaseLock {
             Ok(l) => {
                 if self.are_we_leading(&l)? {
                     let lease = self.renew_lease().await?;
-                    log::debug!("successfully renewed lease {}", l.name());
+                    log::debug!("successfully renewed lease {}", l.name_any());
 
                     Ok(LeaseLockResult {
                         acquired_lease: true,
@@ -96,7 +96,7 @@ impl LeaseLock {
                     })
                 } else if self.has_lease_expired(&l)? {
                     let lease = self.acquire_lease(&l).await?;
-                    log::info!("successfully acquired lease {}", lease.name());
+                    log::info!("successfully acquired lease {}", lease.name_any());
 
                     Ok(LeaseLockResult {
                         acquired_lease: true,
@@ -129,7 +129,7 @@ impl LeaseLock {
                 }
 
                 let lease = self.create_lease().await?;
-                log::info!("successfully acquired lease {}", lease.name());
+                log::info!("successfully acquired lease {}", lease.name_any());
 
                 Ok(LeaseLockResult {
                     acquired_lease: true,
@@ -309,7 +309,7 @@ impl LeaseLock {
             .await
             .map_err(Error::ReleaseLease)?;
 
-        log::info!("successfully released lease {}", lease.name());
+        log::info!("successfully released lease {}", lease.name_any());
 
         Ok(())
     }
