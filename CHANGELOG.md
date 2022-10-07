@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.16.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.15.0...v0.16.0) (2022-10-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* do not enable chrono default features since that results in a dependency on a vulerable crate (#45)
+
+### Features
+
+* do not enable chrono default features since that results in a dependency on a vulerable crate ([#45](https://github.com/hendrikmaus/kube-leader-election/issues/45)) ([4bc1940](https://github.com/hendrikmaus/kube-leader-election/commit/4bc19409dfcb864911a942facc5fd7fb71dc0008))
+
 ## [0.15.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.14.0...v0.15.0) (2022-09-22)
 
 
