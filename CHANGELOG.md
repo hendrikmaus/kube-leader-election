@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.18.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.17.0...v0.18.0) (2022-12-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update kube requirement from 0.76 to 0.77 ([#49](https://github.com/hendrikmaus/kube-leader-election/issues/49))
+
+### fest
+
+* Update kube requirement from 0.76 to 0.77 ([#49](https://github.com/hendrikmaus/kube-leader-election/issues/49)) ([7b63bff](https://github.com/hendrikmaus/kube-leader-election/commit/7b63bff0e2773ef9713ffb723984229276ca55c9))
+
 ## [0.17.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.16.0...v0.17.0) (2022-10-31)
 
 
