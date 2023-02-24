@@ -1,6 +1,6 @@
-mod lib;
+mod utils;
 
-use crate::lib::KubeTestUtil;
+use crate::utils::KubeTestUtil;
 use k8s_openapi::api::coordination::v1::Lease;
 use kube_leader_election::{LeaseLock, LeaseLockParams};
 use std::time::Duration;
