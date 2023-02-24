@@ -4,7 +4,7 @@ use crate::utils::KubeTestUtil;
 use kube_leader_election::{LeaseLock, LeaseLockParams};
 use std::time::Duration;
 
-#[async_std::test]
+#[tokio::test]
 async fn leader_election() -> anyhow::Result<()> {
     const NAMESPACE: &str = "leader-election";
     const LEASE_NAME: &str = "leader-election-test";
@@ -46,7 +46,7 @@ async fn leader_election() -> anyhow::Result<()> {
     leadership_01.step_down().await?;
 
     // since the new lease ttl is 1 second, we should be able to acquire it if we wait 2s
-    async_std::task::sleep(Duration::from_secs(2)).await;
+    tokio::time::sleep(Duration::from_secs(2)).await;
 
     let res = leadership_02.try_acquire_or_renew().await?;
     assert!(res.acquired_lease);

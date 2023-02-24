@@ -5,7 +5,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 use std::time::Duration;
 
-#[async_std::main]
+#[tokio::main]
 async fn main() -> anyhow::Result<()> {
     std::env::set_var(
         "RUST_LOG",
@@ -20,7 +20,7 @@ async fn main() -> anyhow::Result<()> {
     {
         let is_leader = is_leader.clone();
 
-        async_std::task::spawn(async move {
+        tokio::spawn(async move {
             let client = kube::Client::try_default().await.unwrap();
 
             // random id part for the sake of simulating something like a pod hash
@@ -46,13 +46,13 @@ async fn main() -> anyhow::Result<()> {
                     Ok(ll) => is_leader.store(ll.acquired_lease, Ordering::Relaxed),
                     Err(err) => log::error!("{:?}", err),
                 }
-                async_std::task::sleep(Duration::from_secs(5)).await;
+                tokio::time::sleep(Duration::from_secs(5)).await;
             }
         });
     }
 
     loop {
         log::info!("currently leading: {}", is_leader.load(Ordering::Relaxed));
-        async_std::task::sleep(Duration::from_secs(5)).await;
+        tokio::time::sleep(Duration::from_secs(5)).await;
     }
 }

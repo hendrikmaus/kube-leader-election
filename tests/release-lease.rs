@@ -5,7 +5,7 @@ use k8s_openapi::api::coordination::v1::Lease;
 use kube_leader_election::{LeaseLock, LeaseLockParams};
 use std::time::Duration;
 
-#[async_std::test]
+#[tokio::test]
 async fn release_lease() -> anyhow::Result<()> {
     const NAMESPACE: &str = "release-lease";
     const LEASE_NAME: &str = "release-lease-test";
@@ -58,7 +58,7 @@ async fn release_lease() -> anyhow::Result<()> {
             .unwrap()
     );
 
-    async_std::task::sleep(Duration::from_secs(2)).await;
+    tokio::time::sleep(Duration::from_secs(2)).await;
 
     // if we re-acquire the lease, its duration is increased from 1 to 15 again
     let lease = leadership.try_acquire_or_renew().await?.lease.unwrap();

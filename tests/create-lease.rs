@@ -5,7 +5,7 @@ use k8s_openapi::api::coordination::v1::Lease;
 use kube_leader_election::{LeaseLock, LeaseLockParams};
 use std::time::Duration;
 
-#[async_std::test]
+#[tokio::test]
 async fn create_lease() -> anyhow::Result<()> {
     const NAMESPACE: &str = "create-lease";
     const LEASE_NAME: &str = "create-lease-test";
