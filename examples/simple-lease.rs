@@ -1,7 +1,7 @@
 use kube_leader_election::{LeaseLock, LeaseLockParams};
 use std::time::Duration;
 
-#[async_std::main]
+#[tokio::main]
 async fn main() -> anyhow::Result<()> {
     std::env::set_var(
         "RUST_LOG",
@@ -28,7 +28,7 @@ async fn main() -> anyhow::Result<()> {
     // `lease.acquired_lease` can be used to determine if we're leading or not
 
     log::info!("waiting 5 seconds, then stepping down again");
-    async_std::task::sleep(Duration::from_secs(5)).await;
+    tokio::time::sleep(Duration::from_secs(5)).await;
 
     // To give up leadership, call `step_down`.
     //
