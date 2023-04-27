@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.22.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.21.0...v0.22.0) (2023-04-27)
+
+
+### Features
+
+* Update kube to 0.82 and k8s-openapi to 0.18 ([#63](https://github.com/hendrikmaus/kube-leader-election/issues/63)) ([79508cf](https://github.com/hendrikmaus/kube-leader-election/commit/79508cf80773a0cb84e3a6c876c44090adbfae3e))
+
+
+### Miscellaneous Chores
+
+* **release:** set release version ([e017444](https://github.com/hendrikmaus/kube-leader-election/commit/e017444d6b7ee8e117fd785a6cb55734ca35928a))
+
 ## [0.21.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.20.0...v0.21.0) (2023-03-02)
 
 

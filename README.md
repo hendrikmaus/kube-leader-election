@@ -9,7 +9,7 @@ This library provides simple leader election for Kubernetes workloads.
 <!-- x-release-please-start-version -->
 ```toml
 [dependencies]
-kube-leader-election = "0.21.0"
+kube-leader-election = "0.22.0"
 ```
 <!-- x-release-please-end -->
 
