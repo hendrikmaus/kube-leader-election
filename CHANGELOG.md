@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.26.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.25.0...v0.26.0) (2023-10-01)
+
+
+### ⚠ BREAKING CHANGES
+
+* update kube and make k8s-openapi more flexible ([#74](https://github.com/hendrikmaus/kube-leader-election/issues/74))
+
+### Features
+
+* update kube and make k8s-openapi more flexible ([#74](https://github.com/hendrikmaus/kube-leader-election/issues/74)) ([e4f1045](https://github.com/hendrikmaus/kube-leader-election/commit/e4f104593298377e0e663100288852deaa69f761))
+
 ## [0.25.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.24.0...v0.25.0) (2023-09-01)
 
 
