@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.41.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.40.0...v0.41.0) (2025-05-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* white space change to trigger release pls
+
+### Features
+
+* white space change to trigger release pls ([90304bd](https://github.com/hendrikmaus/kube-leader-election/commit/90304bdf5eb8f369b5c39656ed359b85d94ac019))
+
 ## [0.40.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.39.0...v0.40.0) (2025-03-12)
 
 
