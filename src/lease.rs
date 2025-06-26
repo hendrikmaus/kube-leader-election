@@ -61,13 +61,22 @@ pub struct LeaseLockParams {
 }
 
 /// Result of a `try_acquire_or_renew` call on a `LeaseLock`
-#[derive(Default, Debug)]
-pub struct LeaseLockResult {
-    /// Bool to indicate whether leadership was acquired
-    pub acquired_lease: bool,
+#[derive(Debug)]
+pub enum LeaseLockResult {
+    /// Indicates that the leadership was acquired or renewed
+    Acquired(Lease),
+    
+    /// Indicates that the leadership was not acquired
+    NotAcquired(Lease),
+}
 
-    /// The latest `Lease` resource
-    pub lease: Option<Lease>,
+impl LeaseLockResult {
+    pub fn lease(&self) -> Option<&Lease> {
+        match self {
+            Self::Acquired(lease) => Some(lease),
+            Self::NotAcquired(lease) => Some(lease),
+        }
+    }
 }
 
 impl LeaseLock {
@@ -90,18 +99,12 @@ impl LeaseLock {
                     let lease = self.renew_lease().await?;
                     log::debug!("successfully renewed lease {}", l.name_any());
 
-                    Ok(LeaseLockResult {
-                        acquired_lease: true,
-                        lease: Some(lease),
-                    })
+                    Ok(LeaseLockResult::Acquired(lease))
                 } else if self.has_lease_expired(&l)? {
                     let lease = self.acquire_lease(&l).await?;
                     log::info!("successfully acquired lease {}", lease.name_any());
 
-                    Ok(LeaseLockResult {
-                        acquired_lease: true,
-                        lease: Some(lease),
-                    })
+                    Ok(LeaseLockResult::Acquired(lease))
                 } else {
                     log::info!(
                         "lease is held by {} and has not yet expired",
@@ -117,10 +120,7 @@ impl LeaseLock {
                             })?
                     );
 
-                    Ok(LeaseLockResult {
-                        acquired_lease: false,
-                        lease: None,
-                    })
+                    Ok(LeaseLockResult::NotAcquired(l))
                 }
             }
             Err(kube::Error::Api(api_err)) => {
@@ -131,10 +131,7 @@ impl LeaseLock {
                 let lease = self.create_lease().await?;
                 log::info!("successfully acquired lease {}", lease.name_any());
 
-                Ok(LeaseLockResult {
-                    acquired_lease: true,
-                    lease: Some(lease),
-                })
+                Ok(LeaseLockResult::Acquired(lease))
             }
             Err(e) => Err(e.into()),
         };
