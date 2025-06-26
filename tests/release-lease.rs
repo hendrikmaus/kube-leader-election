@@ -61,7 +61,8 @@ async fn release_lease() -> anyhow::Result<()> {
     tokio::time::sleep(Duration::from_secs(2)).await;
 
     // if we re-acquire the lease, its duration is increased from 1 to 15 again
-    let lease = leadership.try_acquire_or_renew().await?.lease.unwrap();
+    let res = leadership.try_acquire_or_renew().await?;
+    let lease = res.lease().unwrap();
 
     assert_eq!(
         15,
