@@ -1,7 +1,7 @@
 mod utils;
 
 use crate::utils::KubeTestUtil;
-use kube_leader_election::{LeaseLock, LeaseLockParams};
+use kube_leader_election::{LeaseLock, LeaseLockParams, LeaseLockResult};
 use std::time::Duration;
 
 #[tokio::test]
@@ -39,7 +39,7 @@ async fn leader_election() -> anyhow::Result<()> {
         },
     );
     let res = leadership_02.try_acquire_or_renew().await?;
-    assert_eq!(false, res.acquired_lease);
+    assert!(matches!(res, LeaseLockResult::NotAcquired(_)));
 
     // now HOLDER_ID_01 will release the lock
 
@@ -49,7 +49,7 @@ async fn leader_election() -> anyhow::Result<()> {
     tokio::time::sleep(Duration::from_secs(2)).await;
 
     let res = leadership_02.try_acquire_or_renew().await?;
-    assert!(res.acquired_lease);
+    assert!(matches!(res, LeaseLockResult::Acquired(_)));
 
     KubeTestUtil::delete_namespace(NAMESPACE)?;
 
