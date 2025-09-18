@@ -1,5 +1,5 @@
 use kube_leader_election::{LeaseLock, LeaseLockParams};
-use rand::distributions::Alphanumeric;
+use rand::distr::Alphanumeric;
 use rand::Rng;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
@@ -24,7 +24,7 @@ async fn main() -> anyhow::Result<()> {
             let client = kube::Client::try_default().await.unwrap();
 
             // random id part for the sake of simulating something like a pod hash
-            let random: String = rand::thread_rng()
+            let random: String = rand::rng()
                 .sample_iter(&Alphanumeric)
                 .take(7)
                 .map(char::from)
