@@ -39,6 +39,11 @@ pub enum Error {
     JiffError(#[from] jiff::Error),
 }
 
+/// Formats a Timestamp with microsecond precision and +00:00 offset
+fn format_timestamp(ts: jiff::Timestamp) -> String {
+    format!("{:.6}", ts.display_with_offset(jiff::tz::Offset::UTC))
+}
+
 /// Represent a `LeaseLock` mechanism to try and acquire leadership status
 pub struct LeaseLock {
     /// Parameters to describe the Lease
@@ -185,7 +190,7 @@ impl LeaseLock {
 
     /// Create a `Lease` resource in Kubernetes
     async fn create_lease(&self) -> Result<Lease, Error> {
-        let now = format!("{:.6}", jiff::Timestamp::now());
+        let now = format_timestamp(jiff::Timestamp::now());
 
         let lease: Lease = serde_json::from_value(json!({
             "apiVersion": "coordination.k8s.io/v1",
@@ -208,7 +213,7 @@ impl LeaseLock {
 
     /// Acquire the `Lease` resource
     async fn acquire_lease(&self, lease: &Lease) -> Result<Lease, Error> {
-        let now = format!("{:.6}", jiff::Timestamp::now());
+        let now = format_timestamp(jiff::Timestamp::now());
         let transitions = &lease
             .spec
             .as_ref()
@@ -251,7 +256,7 @@ impl LeaseLock {
             "kind": "Lease",
             "metadata": { "name": &self.params.lease_name },
             "spec": {
-                "renewTime": format!("{:.6}", jiff::Timestamp::now()),
+                "renewTime": format_timestamp(jiff::Timestamp::now()),
                 "leaseDurationSeconds": self.params.lease_ttl.as_secs(),
             }
         });
@@ -288,7 +293,7 @@ impl LeaseLock {
             return Err(Error::ReleaseLockWhenNotLeading { leader });
         }
 
-        let now = format!("{:.6}", jiff::Timestamp::now());
+        let now = format_timestamp(jiff::Timestamp::now());
         let patch = json!({
             "apiVersion": "coordination.k8s.io/v1",
             "kind": "Lease",
@@ -314,5 +319,15 @@ impl LeaseLock {
         log::info!("successfully released lease {}", lease.name_any());
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_format_timestamp() {
+        assert_eq!("1970-01-01T00:00:00.000000+00:00", format_timestamp(jiff::Timestamp::UNIX_EPOCH));
     }
 }
