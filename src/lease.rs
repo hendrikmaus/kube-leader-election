@@ -1,7 +1,5 @@
 use k8s_openapi::api::coordination::v1::Lease;
-use k8s_openapi::chrono::SecondsFormat;
 use kube::api::{PatchParams, PostParams};
-use kube::error::ErrorResponse;
 use kube::ResourceExt;
 use serde_json::json;
 
@@ -23,7 +21,7 @@ pub enum Error {
     TraverseLease { key: String },
 
     #[error("got unexpected Kubernetes API error: {response:}")]
-    ApiError { response: ErrorResponse },
+    ApiError { response: Box<kube::error::Status> },
 
     #[error("aborted to release lock because we are not leading, the lock is held by {leader:}")]
     ReleaseLockWhenNotLeading { leader: String },
@@ -36,6 +34,14 @@ pub enum Error {
 
     #[error(transparent)]
     Kube(#[from] kube::Error),
+
+    #[error(transparent)]
+    JiffError(#[from] jiff::Error),
+}
+
+/// Formats a Timestamp with microsecond precision and +00:00 offset
+fn format_timestamp(ts: jiff::Timestamp) -> String {
+    format!("{:.6}", ts.display_with_offset(jiff::tz::Offset::UTC))
 }
 
 /// Represent a `LeaseLock` mechanism to try and acquire leadership status
@@ -159,7 +165,7 @@ impl LeaseLock {
 
     /// Helper to determine if the given lease has expired and can be acquired
     fn has_lease_expired(&self, lease: &Lease) -> Result<bool, Error> {
-        let now = chrono::Utc::now();
+        let now = jiff::Timestamp::now();
         let spec = lease.spec.as_ref().ok_or(Error::TraverseLease {
             key: "spec".to_string(),
         })?;
@@ -176,22 +182,23 @@ impl LeaseLock {
             .ok_or(Error::TraverseLease {
                 key: "spec.leaseDurationSeconds".to_string(),
             })?;
-        let timeout = last_renewed + chrono::Duration::seconds(*lease_duration as i64);
+        let timeout =
+            last_renewed.checked_add(jiff::SignedDuration::from_secs(*lease_duration as i64))?;
 
         Ok(now.gt(&timeout))
     }
 
     /// Create a `Lease` resource in Kubernetes
     async fn create_lease(&self) -> Result<Lease, Error> {
-        let now: &str = &chrono::Utc::now().to_rfc3339_opts(SecondsFormat::Micros, false);
+        let now = format_timestamp(jiff::Timestamp::now());
 
         let lease: Lease = serde_json::from_value(json!({
             "apiVersion": "coordination.k8s.io/v1",
             "kind": "Lease",
             "metadata": { "name": &self.params.lease_name },
             "spec": {
-                "acquireTime": now,
-                "renewTime": now,
+                "acquireTime": now.as_str(),
+                "renewTime": now.as_str(),
                 "holderIdentity": &self.params.holder_id,
                 "leaseDurationSeconds": self.params.lease_ttl.as_secs(),
                 "leaseTransitions": 0
@@ -206,7 +213,7 @@ impl LeaseLock {
 
     /// Acquire the `Lease` resource
     async fn acquire_lease(&self, lease: &Lease) -> Result<Lease, Error> {
-        let now: &str = &chrono::Utc::now().to_rfc3339_opts(SecondsFormat::Micros, false);
+        let now = format_timestamp(jiff::Timestamp::now());
         let transitions = &lease
             .spec
             .as_ref()
@@ -223,8 +230,8 @@ impl LeaseLock {
             "kind": "Lease",
             "metadata": { "name": &self.params.lease_name },
             "spec": {
-                "acquireTime": now,
-                "renewTime": now,
+                "acquireTime": now.as_str(),
+                "renewTime": now.as_str(),
                 "leaseTransitions": transitions + 1,
                 "holderIdentity": &self.params.holder_id,
                 "leaseDurationSeconds": self.params.lease_ttl.as_secs(),
@@ -249,7 +256,7 @@ impl LeaseLock {
             "kind": "Lease",
             "metadata": { "name": &self.params.lease_name },
             "spec": {
-                "renewTime": chrono::Utc::now().to_rfc3339_opts(SecondsFormat::Micros, false),
+                "renewTime": format_timestamp(jiff::Timestamp::now()),
                 "leaseDurationSeconds": self.params.lease_ttl.as_secs(),
             }
         });
@@ -286,14 +293,14 @@ impl LeaseLock {
             return Err(Error::ReleaseLockWhenNotLeading { leader });
         }
 
-        let now: &str = &chrono::Utc::now().to_rfc3339_opts(SecondsFormat::Micros, false);
+        let now = format_timestamp(jiff::Timestamp::now());
         let patch = json!({
             "apiVersion": "coordination.k8s.io/v1",
             "kind": "Lease",
             "metadata": { "name": &self.params.lease_name },
             "spec": {
-                "acquireTime": now,
-                "renewTime": now,
+                "acquireTime": now.as_str(),
+                "renewTime": now.as_str(),
                 "leaseDurationSeconds": 1,
                 "holderIdentity": ""
             }
@@ -312,5 +319,15 @@ impl LeaseLock {
         log::info!("successfully released lease {}", lease.name_any());
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_format_timestamp() {
+        assert_eq!("1970-01-01T00:00:00.000000+00:00", format_timestamp(jiff::Timestamp::UNIX_EPOCH));
     }
 }
