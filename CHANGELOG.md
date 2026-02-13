@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.43.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.42.0...v0.43.0) (2026-02-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade kube crate to 3, switch from chrono to jiff ([#116](https://github.com/hendrikmaus/kube-leader-election/issues/116))
+
+### Features
+
+* change LeaseLockResult to enum ([#109](https://github.com/hendrikmaus/kube-leader-election/issues/109)) ([91808b4](https://github.com/hendrikmaus/kube-leader-election/commit/91808b4525681522542fe70b7edf1f3ea443bfef))
+* upgrade kube crate to 3, switch from chrono to jiff ([#116](https://github.com/hendrikmaus/kube-leader-election/issues/116)) ([dbde132](https://github.com/hendrikmaus/kube-leader-election/commit/dbde1324fe842bb5744c045fe174a24f0acd5882))
+
 ## [0.42.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.41.0...v0.42.0) (2025-10-07)
 
 
