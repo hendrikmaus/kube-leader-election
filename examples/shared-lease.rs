@@ -1,4 +1,4 @@
-use kube_leader_election::{LeaseLock, LeaseLockParams};
+use kube_leader_election::{LeaseLock, LeaseLockParams, LeaseLockResult};
 use rand::distributions::Alphanumeric;
 use rand::Rng;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -43,7 +43,7 @@ async fn main() -> anyhow::Result<()> {
 
             loop {
                 match leadership.try_acquire_or_renew().await {
-                    Ok(ll) => is_leader.store(ll.acquired_lease, Ordering::Relaxed),
+                    Ok(ll) => is_leader.store(matches!(ll, LeaseLockResult::Acquired(_)), Ordering::Relaxed),
                     Err(err) => log::error!("{:?}", err),
                 }
                 tokio::time::sleep(Duration::from_secs(5)).await;
