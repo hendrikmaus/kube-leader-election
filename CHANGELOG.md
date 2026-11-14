@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.45.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.44.0...v0.45.0) (2026-11-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* bump kube and k8s-openapi from 4 to 5.1 and 0.27 to 0.29 ([#121](https://github.com/hendrikmaus/kube-leader-election/issues/121))
+
+### Features
+
+* bump kube and k8s-openapi from 4 to 5.1 and 0.27 to 0.29 ([#121](https://github.com/hendrikmaus/kube-leader-election/issues/121)) ([ca7ef5a](https://github.com/hendrikmaus/kube-leader-election/commit/ca7ef5a1e9556aeaead3dbd023302669aa65cb80))
+
 ## [0.44.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.43.0...v0.44.0) (2026-06-16)
 
 
