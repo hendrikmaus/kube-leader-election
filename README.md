@@ -13,6 +13,12 @@ kube-leader-election = "0.44.0"
 ```
 <!-- x-release-please-end -->
 
+Like `kube`, this crate leaves the Kubernetes version to your binary; enable exactly one:
+
+```toml
+k8s-openapi = { version = "0.29", features = ["v1_33"] }
+```
+
 ## Example
 
 Acquire leadership on a Kubernetes [`Lease`](https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/lease-v1/) called `some-operator-lock`, in the `default` namespace and promise to renew the lock every 15 seconds:
