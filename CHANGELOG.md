@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.1](https://github.com/hendrikmaus/kube-leader-election/compare/v0.45.0...v0.45.1) (2026-11-15)
+
+
+### Bug Fixes
+
+* k8s-openapi default feature ([#123](https://github.com/hendrikmaus/kube-leader-election/issues/123)) ([e94daae](https://github.com/hendrikmaus/kube-leader-election/commit/e94daaef59aba872ad3cb1621baa44b9485c757b))
+
 ## [0.45.0](https://github.com/hendrikmaus/kube-leader-election/compare/v0.44.0...v0.45.0) (2026-11-13)
 
 
